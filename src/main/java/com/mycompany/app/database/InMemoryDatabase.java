@@ -57,7 +57,7 @@ public class InMemoryDatabase {
                 currentId += 1;
                 insert(entity);
             } else {
-                // TODO logging
+                //TODO onDatabaseInsertingLevelErrors.log
             }
         }
     }
@@ -75,8 +75,8 @@ public class InMemoryDatabase {
         insertStatement.setString(4, entity.getEmail());
         insertStatement.setString(5, entity.getSex());
         insertStatement.setString(6, entity.getImageInfo());
-        insertStatement.setString(7, entity.getWorkplace());
-        insertStatement.setString(8, "$" + entity.getHourlyPay().toString());
+        insertStatement.setString(7, entity.getCard());
+        insertStatement.setString(8, "$" + entity.getServiceCost().toString());
         insertStatement.setString(9, entity.getCool());
         insertStatement.setString(10, entity.getAwesome());
         insertStatement.setString(11, entity.getResidence());

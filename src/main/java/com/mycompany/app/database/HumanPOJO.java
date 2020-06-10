@@ -8,8 +8,8 @@ public class HumanPOJO {
     private String email;
     private String sex;
     private String imageInfo;
-    private String workplace;
-    private Double hourlyPay;
+    private String card;
+    private Double serviceCost;
     private String isCool;
     private String isAwesome;
     private String residence;
@@ -17,8 +17,8 @@ public class HumanPOJO {
     private Boolean containsFullData = true;
 
     public HumanPOJO(String firstName, String lastName, String email,
-                     String sex, String imageInfo, String workplace,
-                     Double hourlyPay, String isCool, String isAwesome,
+                     String sex, String imageInfo, String card,
+                     Double serviceCost, String isCool, String isAwesome,
                      String residence) {
 
         if (firstName == null) {
@@ -51,16 +51,16 @@ public class HumanPOJO {
             this.imageInfo = imageInfo;
         }
 
-        if (workplace == null) {
+        if (card == null) {
             containsFullData = false;
         } else {
-            this.workplace = workplace;
+            this.card = card;
         }
 
-        if (hourlyPay == null) {
+        if (serviceCost == null) {
             containsFullData = false;
         } else {
-            this.hourlyPay = hourlyPay;
+            this.serviceCost = serviceCost;
         }
 
         if (isCool == null) {
@@ -130,20 +130,20 @@ public class HumanPOJO {
         this.imageInfo = imageInfo;
     }
 
-    public String getWorkplace() {
-        return workplace;
+    public String getCard() {
+        return card;
     }
 
-    public void setWorkplace(String workplace) {
-        this.workplace = workplace;
+    public void setCard(String card) {
+        this.card = card;
     }
 
-    public Double getHourlyPay() {
-        return hourlyPay;
+    public Double getServiceCost() {
+        return serviceCost;
     }
 
-    public void setHourlyPay(Double hourlyPay) {
-        this.hourlyPay = hourlyPay;
+    public void setServiceCost(Double serviceCost) {
+        this.serviceCost = serviceCost;
     }
 
     public String getCool() {
