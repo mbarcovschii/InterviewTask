@@ -1,10 +1,18 @@
 package com.mycompany.app.database;
 
+import com.mycompany.app.core.Main;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryDatabase {
+
+    public static final String DATA_INSERTING_ERROR_LOG = "logs/dataInsertingLevelErrors/bad-data-";
 
     private static Connection connection;
 
@@ -37,7 +45,7 @@ public class InMemoryDatabase {
                 ");");
     }
 
-    public static void insert(List<HumanPOJO> entityList) throws SQLException {
+    public static void insert(List<HumanPOJO> entityList) throws SQLException, IOException {
 
         if (entityList.size() == 0) {
             return;
@@ -49,6 +57,10 @@ public class InMemoryDatabase {
             currentId = getMaxId() + 1;
         }
 
+        String curTimestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss"));
+        String errorsFilePath = DATA_INSERTING_ERROR_LOG + curTimestamp + ".txt";
+        FileWriter errorsWriter = new FileWriter(errorsFilePath);
+
         for (HumanPOJO entity : entityList) {
 
             if (entity.containsFullData()) {
@@ -56,8 +68,10 @@ public class InMemoryDatabase {
                 entity.setId(currentId);
                 currentId += 1;
                 insert(entity);
+                Main.recordsSuccessful += 1;
             } else {
-                //TODO onDatabaseInsertingLevelErrors.log
+                errorsWriter.write(entity.toString());
+                Main.recordsFailed += 1;
             }
         }
     }
@@ -94,7 +108,7 @@ public class InMemoryDatabase {
         return get("A", firstName);
     }
 
-    public static List<HumanPOJO> getByHourlyPay(Double hourlyPay) throws SQLException {
+    public static List<HumanPOJO> getByServiceCost(Double hourlyPay) throws SQLException {
 
         return get("G", "$" + hourlyPay.toString());
     }

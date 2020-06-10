@@ -174,4 +174,14 @@ public class HumanPOJO {
 
         return containsFullData;
     }
+
+    @Override
+    public String toString() {
+
+        return String.format("%s %s %s %s %s %s %.2f %s %s %s\n",
+                getFirstName(), getLastName(), getEmail(),
+                getSex(), getImageInfo(), getCard(),
+                getServiceCost(), getCool(), getAwesome(),
+                getResidence());
+    }
 }

@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class InMemoryDatabaseTest {
 
             exception.printStackTrace();
             throw exception;
-        }
+        }  catch (IOException ignored) { }
 
         entityList = InMemoryDatabase.getById(0L);
         Assert.assertNotNull(entityList);
@@ -53,7 +54,7 @@ public class InMemoryDatabaseTest {
         entityList = InMemoryDatabase.getByFirstName("Bob");
         Assert.assertEquals(entityList.size(), 2);
 
-        entityList = InMemoryDatabase.getByHourlyPay(20.3);
+        entityList = InMemoryDatabase.getByServiceCost(20.3);
         Assert.assertNotNull(entityList);
         Assert.assertEquals(entityList.get(0).getEmail(), "coolGuy@gmail.com");
     }
