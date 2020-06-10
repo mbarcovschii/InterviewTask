@@ -69,3 +69,11 @@ Final statistics are written to a log/statistics.txt. Before writing statistics 
 in the static fields of the **Main.class**.
 
 Thank you for your attention and cool task!
+
+## During the creation of this project I:
+* Refreshed my basic knowledge of in-memory databases and JDBC
+* Learned how to work with SQLite database
+* Learned how to parse SCV documents with using of OpenSCV library
+* Realized that cannot do unit testing properly
+* Learned how to format Markdown documents
+* Etc. Tomorrow I'll write more with a fresh mind
