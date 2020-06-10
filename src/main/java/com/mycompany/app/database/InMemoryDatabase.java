@@ -1,9 +1,7 @@
 package com.mycompany.app.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryDatabase {
@@ -45,7 +43,7 @@ public class InMemoryDatabase {
             return;
         }
 
-        Long currentId = 0L;
+        long currentId = 0L;
 
         if (isNotEmpty()) {
             currentId = getMaxId() + 1;
@@ -84,6 +82,47 @@ public class InMemoryDatabase {
         insertStatement.setString(11, entity.getResidence());
 
         insertStatement.executeUpdate();
+    }
+
+    public static List<HumanPOJO> getById(Long id) throws SQLException {
+
+        return get("ID", id.toString());
+    }
+
+    public static List<HumanPOJO> getByFirstName(String firstName) throws SQLException {
+
+        return get("A", firstName);
+    }
+
+    public static List<HumanPOJO> getByHourlyPay(Double hourlyPay) throws SQLException {
+
+        return get("G", "$" + hourlyPay.toString());
+    }
+
+    private static List<HumanPOJO> get(String columnName, String searchValue) throws SQLException {
+
+        ResultSet queryResult =
+                connection.createStatement().
+                        executeQuery("" +
+                                "SELECT * FROM interview\n" +
+                                "WHERE " + columnName + " = \"" + searchValue + "\"");
+
+        if (queryResult.next()) {
+
+            List<HumanPOJO> entityList = new ArrayList<>();
+            do {
+                entityList.add(new HumanPOJO(queryResult.getString("A"), queryResult.getString("B"),
+                        queryResult.getString("C"), queryResult.getString("D"),
+                        queryResult.getString("E"), queryResult.getString("F"),
+                        Double.parseDouble(queryResult.getString("G").substring(1)),
+                        queryResult.getString("H"), queryResult.getString("I"),
+                        queryResult.getString("J")));
+            } while (queryResult.next());
+
+            return entityList;
+        } else {
+            return null;
+        }
     }
 
     private static boolean isNotEmpty() throws SQLException {

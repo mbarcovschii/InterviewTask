@@ -1,6 +1,7 @@
 package com.mycompany.app.database;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class InMemoryDatabaseTest {
     }
 
     @Test
-    public void dataInsertionTest() throws SQLException {
+    public void dataManipulationTest() throws SQLException {
 
         List<HumanPOJO> entityList = new ArrayList<>();
 
@@ -29,6 +30,10 @@ public class InMemoryDatabaseTest {
                 "MALE", "info", null, 20.3, "TRUE",
                 "TRUE", ""));
 
+        entityList.add(new HumanPOJO("Bob", "Lennon", "someMail@gmail.com",
+                "MALE", "info", "workplace", 10.14, "False",
+                "True", "The Moon"));
+
         try {
             InMemoryDatabase.insert(entityList);
         } catch (SQLException exception) {
@@ -36,6 +41,21 @@ public class InMemoryDatabaseTest {
             exception.printStackTrace();
             throw exception;
         }
+
+        entityList = InMemoryDatabase.getById(0L);
+        Assert.assertNotNull(entityList);
+        Assert.assertEquals(entityList.get(0).getFirstName(), "Bob");
+        Assert.assertEquals(entityList.get(0).getLastName(), "Stone");
+
+        entityList = InMemoryDatabase.getById(2L);
+        Assert.assertNull(entityList);
+
+        entityList = InMemoryDatabase.getByFirstName("Bob");
+        Assert.assertEquals(entityList.size(), 2);
+
+        entityList = InMemoryDatabase.getByHourlyPay(20.3);
+        Assert.assertNotNull(entityList);
+        Assert.assertEquals(entityList.get(0).getEmail(), "coolGuy@gmail.com");
     }
 
     @AfterClass
